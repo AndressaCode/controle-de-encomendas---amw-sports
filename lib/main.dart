@@ -159,7 +159,7 @@ class _HomeState extends State<Home> {
             height: 35.0,
             decoration: BoxDecoration(
               color: Colors.grey[800],
-              borderRadius: BorderRadius.circular(10.0),
+              borderRadius: BorderRadius.circular(5.0),
             ),
             child: FlatButton.icon(
               onPressed: () {},
