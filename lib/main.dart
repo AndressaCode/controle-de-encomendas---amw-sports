@@ -1,3 +1,4 @@
+import 'package:cadastrodeencomendaamw/cadastroEncomenda.dart';
 import 'package:flutter/material.dart';
 
 void main(){
@@ -89,7 +90,12 @@ class _HomeState extends State<Home> {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context,
+                        MaterialPageRoute(
+                          builder: (context) => CadastroEncomenda(),
+                        ),);
+                    },
                     child: Center(
                       child: Text("Cadastrar encomenda", style: TextStyle(
                         color: Colors.white,
