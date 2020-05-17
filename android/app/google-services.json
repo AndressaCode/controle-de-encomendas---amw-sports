@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "781713396534",
+    "firebase_url": "https://cadastro-de-encomendas-amw.firebaseio.com",
+    "project_id": "cadastro-de-encomendas-amw",
+    "storage_bucket": "cadastro-de-encomendas-amw.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:781713396534:android:a2702fa7ad1c2d038ed997",
+        "android_client_info": {
+          "package_name": "br.com.silvadesouza.cadastrodeencomendaamw"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "781713396534-jtli68kmqltco64s2s4vihbaba4mqrsf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUmyeexMZb956K2mvUc3Un-2IM92TRME8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "781713396534-jtli68kmqltco64s2s4vihbaba4mqrsf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
