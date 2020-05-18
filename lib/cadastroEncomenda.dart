@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CadastroEncomenda extends StatefulWidget {
   @override
@@ -6,6 +8,16 @@ class CadastroEncomenda extends StatefulWidget {
 }
 
 class _CadastroEncomendaState extends State<CadastroEncomenda> {
+
+  var selectedCliente;
+  var selectedProduto;
+
+  //List<String> _clientes = <String>[
+    //'001',
+    //'002',
+    //'003'
+  //];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +44,8 @@ class _CadastroEncomendaState extends State<CadastroEncomenda> {
               ),
             ),
 
-            /* ----------------------------------------- Container principal*/
+            /* ----------------------------------------- CONTAINER PRINCIPAL */
+
             Container(
               height: 410.0,
               width: 390.0,
@@ -45,6 +58,8 @@ class _CadastroEncomendaState extends State<CadastroEncomenda> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: 20.0),
+
+                  /* ----------------------------------------------- Cliente */
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -53,7 +68,87 @@ class _CadastroEncomendaState extends State<CadastroEncomenda> {
                         width: 75.0,
                         height: 20.0,
                         //color: Colors.grey,
-                        child: Text("Descrição", style: TextStyle(
+                        child: Text("Cliente", style: TextStyle(
+                          color: Colors.grey[800],
+                        ),),
+                      ),
+                      SizedBox(width: 10.0),
+                      Expanded(
+                        child: Container(
+                          height: 40.0,
+                          width: 80.0,
+                          color: Colors.white,
+                          /*child: TextField(
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Fonte de venda',
+                            ),
+                          ),*/
+                          child: StreamBuilder<QuerySnapshot>(
+                              stream: Firestore.instance.collection("catalogo-clientes").snapshots(),
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData)
+                                  return Text("Loading......");
+                                else {
+                                  List<DropdownMenuItem> clientela = [];
+                                  for (int i = 0; i < snapshot.data.documents.length; i++) {
+                                    DocumentSnapshot snap = snapshot.data.documents[i];
+                                    clientela.add(
+                                      DropdownMenuItem(
+                                        child: Text(
+                                          snap.documentID,
+                                          style: TextStyle(color: Colors.deepOrange),
+                                        ),
+                                        value: "${snap.documentID}",
+                                      ),
+                                    );
+                                  }
+                                  return Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      SizedBox(width: 10.0,),
+                                      DropdownButton(
+                                        items: clientela,
+                                        onChanged: (clientes){
+                                          final snackBar = SnackBar(
+                                            content: Text(
+                                              'Cliente selecionado $clientes',
+                                              style: TextStyle(color: Colors.deepOrange),
+                                            ),
+                                          );
+                                          Scaffold.of(context).showSnackBar(snackBar);
+                                          setState(() {
+                                            selectedCliente = clientes;
+                                          });
+                                        },
+                                        value: selectedCliente,
+                                        isExpanded: false,
+                                        hint: Text(
+                                            "Clientes"
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }
+                              }
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10.0),
+                  /* ------------------------------------------- Fim Cliente */
+
+                  /* ------------------------------------------------ Produto*/
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 75.0,
+                        height: 20.0,
+                        //color: Colors.grey,
+                        child: Text("Produto", style: TextStyle(
                           color: Colors.grey[800],
                         ),),
                       ),
@@ -68,38 +163,63 @@ class _CadastroEncomendaState extends State<CadastroEncomenda> {
                               labelText: 'Descrição do produto',
                             ),
                           ),
+                          /*StreamBuilder<QuerySnapshot>(
+                            stream: Firestore.instance.collection("produtos").snapshots(),
+                            builder: (context, snapshot){
+                              if(!snapshot.hasData)
+                                return Text("Carregando");
+                              else{
+                                List<DropdownMenuItem> prod = [];
+                                for(int i=0; i<snapshot.data.documents.length; i++){
+                                  DocumentSnapshot snapProduto = snapshot.data.documents[i];
+                                  prod.add(
+                                    DropdownMenuItem(
+                                      child: Text(
+                                        snapProduto.documentID,
+                                        style: TextStyle(
+                                          color: Colors.deepOrange
+                                        ),
+                                      ),
+                                      value: "{$snapProduto.docID}",
+                                    ),
+                                  );
+                                }
+                                return Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SizedBox(width: 10.0,),
+                                    DropdownButton(
+                                      items: prod,
+                                      onChanged: (catalogoProduto){
+                                        final snackProduto = SnackBar(
+                                          content: Text(
+                                            'Produto selecionado $catalogoProduto',
+                                            style: TextStyle(
+                                              color: Colors.deepOrange
+                                            ),
+                                          ),
+                                        );
+                                        Scaffold.of(context).showSnackBar(snackProduto);
+                                        setState(() {
+                                          selectedProduto = catalogoProduto;
+                                        });
+                                    },
+                                      value: selectedProduto,
+                                      isExpanded: false,
+                                      hint: Text('Produtos'),
+                                    ),
+                                  ],
+                                );
+                              }
+                            }
+                          )*/
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 10.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 75.0,
-                        height: 20.0,
-                        //color: Colors.grey,
-                        child: Text("Venda", style: TextStyle(
-                          color: Colors.grey[800],
-                        ),),
-                      ),
-                      SizedBox(width: 10.0),
-                      Expanded(
-                        child: Container(
-                          height: 40.0,
-                          color: Colors.white,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Fonte de venda',
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+
+                  /* -------------------------------------------- Fim Produto*/
+
                   SizedBox(height: 10.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
